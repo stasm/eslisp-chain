@@ -1,4 +1,7 @@
-# eslisp-chain
+# eslisp-chain [![Build status][travisimage]][travislink]
+
+[travisimage]: https://travis-ci.org/stasm/eslisp-chain.png?branch=master
+[travislink]: https://travis-ci.org/stasm/eslisp-chain
 
 <!-- !test program
 sed 's/(require "eslisp-chain")/(require ".\\/index")/' \
@@ -84,7 +87,7 @@ It can be used to compose array methods:
     }).forEach(processPublicMembers);
 
 
-The macro offers an alternative even for single method calls where there is no 
+The macro offers an alternative even for single method calls when there is no 
 chaining:
 
 <!-- !test in single method accessor -->
