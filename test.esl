@@ -1,0 +1,35 @@
+(macro test (lambda (name body)
+  (return `((require "tape") ,name (lambda (t)
+    ,@body (t.end))))))
+
+(function eslc (code)
+   (return ((require "eslisp")
+      (+ "(macro -> (require \"./index\"))"
+         code))))
+
+; - - -
+
+(test "object is a reference"
+  ((t.equals
+    (eslc "(-> foo)")
+    "foo;")))
+
+(test "object is the return value of a call"
+  ((t.equals
+    (eslc "(-> (foo))")
+    "foo();")))
+
+(test "chain methods without arguments"
+  ((t.equals
+    (eslc "(-> (foo) (bar) (baz))")
+    "foo().bar().baz();")))
+
+(test "chain methods with arguments"
+  ((t.equals
+    (eslc "(-> (foo arg1) (bar arg2) (baz arg3))")
+    "foo(arg1).bar(arg2).baz(arg3);")))
+
+(test "chain methods whihc take lambdas"
+  ((t.equals
+    (eslc "(-> (foo arg1) (bar (lambda () (return true))))")
+    "foo(arg1).bar(function () {\n    return true;\n});")))

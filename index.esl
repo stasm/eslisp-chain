@@ -1,0 +1,10 @@
+(= (. module exports) (lambda ()
+  (function car (arr) (return (get arr 0)))
+  (function cdr (arr) (return ((. arr slice) 1)))
+  (function reduce (arr fn)
+    (return ((. Array prototype reduce call) arr fn)))
+
+  (return (reduce arguments
+    (lambda (seq cur)
+      (return
+        `((. ,seq ,(car cur)) ,@(cdr cur))))))))
